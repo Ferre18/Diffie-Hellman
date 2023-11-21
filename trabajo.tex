@@ -1,7 +1,56 @@
 \documentclass[11pt]{article}
+	\usepackage{listings}
 	\usepackage{amsmath}
 	\usepackage{amssymb}
+	\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 	\usepackage[hidelinks=true]{hyperref}
+	
+
+	% BEGIN CUSTOM PYTHON
+	% Fuente para python
+	\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{11} % for bold
+	\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{11}  % for normal
+
+	% Mis colores
+	\definecolor{deepblue}{rgb}{0,0,0.5}
+	\definecolor{deepred}{rgb}{0.6,0,0}
+	\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+	% Python style for highlighting
+	\newcommand\pythonstyle{\lstset{
+	language=Python,
+	basicstyle=\ttm,
+	breakatwhitespace=false,         % Activarlo para que los saltos automáticos solo se apliquen en los espacios en blanco
+  	breaklines=true,                 % Activa el salto de línea automático
+  	tabsize=2,	                   % Establece el salto de las tabulaciones a 2 espacios
+  	numbers=left,					% Pone el numero de lineas
+	morekeywords={self},              % Add palabras que se pintan de azul
+	keywordstyle=\ttb\color{deepblue},
+	emph={Diffie_Hellman},          % Add palabras que se pinten de rojo
+	emphstyle=\ttb\color{deepred},    % Custom highlighting style
+	stringstyle=\color{deepgreen},
+	frame=tb,                         % Recuadro
+	showstringspaces=false
+	}}
+
+
+	% Comando para escribir python directamente en el .tex
+	\lstnewenvironment{python}[1][]
+	{
+	\pythonstyle
+	\lstset{#1}
+	}
+	{}
+
+	% Comando para escribir python desde un fichero externo
+	\newcommand\pythonexternal[2][]{{
+	\pythonstyle
+	\lstinputlisting[#1]{#2}}}
+
+	% Comando para escribir codigo suelto python en una linea
+	\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+	% END CUSTOM PYTHON
+
     \title{\textbf{Intercambio de claves de Diffie y Hellman}}
     \author{Adrián Racero Serrano\\Juan Manuel Cardeñosa Borrego}
     \date{}
@@ -19,7 +68,11 @@
 a
 
 \section{Algoritmo}
-a
+a\\
+\pythonexternal{algoritmo.py}
+\ \\
+Definition \pythoninline{class Diffie_Hellman} means \dots 
+
 
 \section{Codigo}
 a
