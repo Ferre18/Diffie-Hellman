@@ -1,40 +1,47 @@
-from sympy import isprime
-import random
+from funciones_auxiliares import *
 
-def generar_clave_privada(q, a):
-    # Generar una clave privada aleatoria en el rango [2, q-2]
-    clave_privada = random.randint(2, q - 2)
-    return clave_privada
+class DiffieHellman :
+    
+    def __init__(self, q, alfa):
 
-def generar_clave_publica(q, a, clave_privada):
-    # Calcular la clave publica usando la formula: clave_publica = (a^clave_privada) % q
-    clave_publica = pow(a, clave_privada, q)
-    return clave_publica
+        if not(es_primo(q)):
+            print("ERROR: q no es primo")
+            exit(-1)
 
-def generar_clave_compartida(q, clave_publica_otro, clave_privada_propia):
-    # Calcular la clave compartida usando la formula: clave_compartida = (clave_publica_otro^clave_privada_propia) % q
-    clave_compartida = pow(clave_publica_otro, clave_privada_propia, q)
-    return clave_compartida
+        if not(es_raiz_primitiva(alfa, q)):
+            print("ERROR: alfa no es raiz primitiva de q")
+            exit(-1)
 
-# Parametros compartidos publicamente (q y a)
-q = 23
-a = 5
+        self.__q__ = q
+        self.__alfa__ = alfa
 
-# Generar claves privadas y publicas para ambas partes
-clave_privada_alice = generar_clave_privada(q, a)
-clave_publica_alice = generar_clave_publica(q, a, clave_privada_alice)
+        self.__generarClaves__()
 
-clave_privada_bob = generar_clave_privada(q, a)
-clave_publica_bob = generar_clave_publica(q, ax, clave_privada_bob)
+    def __generarClaves__(self):
+        # X < q
+        self.__clavePrivada__ = numero_aleatorio(self.__q__)
+        # Y = alfa^X mod q
+        self.__clavePublica__ = ( self.__alfa__ ** self.__clavePrivada__ ) % self.__q__
 
-# Intercambio de claves publicas
-clave_compartida_alice = generar_clave_compartida(q, clave_publica_bob, clave_privada_alice)
-clave_compartida_bob = generar_clave_compartida(q, clave_publica_alice, clave_privada_bob)
+    def compartir_clave_publica(self):
+        return self.__clavePublica__
 
-# Ambas partes deberian tener la misma clave compartida
-print("Clave compartida por Alice:", clave_compartida_alice)
-print("Clave compartida por Bob:", clave_compartida_bob)
+    def generar_clave_secreta(self, clavePublicaB):
+        # K = Yb^Xa mod q
+        self.__claveSecreta__ = ( clavePublicaB ** self.__clavePrivada__ ) % self.__q__
 
-# Verificar que ambas partes tienen la misma clave compartida
-assert clave_compartida_alice == clave_compartida_bob
+    # Este metodo solo se utiliza para comprobar
+    # que ambas claves secretas son iguales.
+    # Las claves secretas no se deben compartir.
+    def compartir_clave_secreta(self):
+        return self.__claveSecreta__
+    
+    # Cifrar un mensaje usando XOR y la clave secreta
+    def cifrar_xor(self, mensaje):
+        cifrado = [char ^ self.__claveSecreta__ for char in mensaje.encode()]
+        return bytes(cifrado)
 
+    # Cifrar un mensaje usando XOR y la clave secreta
+    def descifrar_xor(self, cifrado):
+        mensaje = ''.join([chr(char ^ self.__claveSecreta__) for char in cifrado])
+        return mensaje
