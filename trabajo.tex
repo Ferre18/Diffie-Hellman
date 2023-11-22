@@ -74,7 +74,7 @@ El algoritmo Diffie-Hellman debe su nombre a sus creadores Whitfield Diffie y Ma
 Este algoritmo permite a dos usuarios cualesquiera intercambiar, de forma confidencial, una clave secreta \textit{K} (o de sesión) para posteriormente cifrar de forma simétrica los mensajes entre ellos dos.
 
 \section{Algoritmo}
-El funcionamiento de este algoritmo es más sencillo de lo que parece y se usa frecuentemente en protocolos y aplicaciones de encriptado de datos, como SSL (Secure Sockets Layer), SSH (Secure Shell) o VPN (Virtual Private Network). Este algoritmo permite que dos entidades (A y B) puedan generar una clave KAB de forma simultánea, y sin enviarla por el canal de comunicaciones. \\
+El funcionamiento de este algoritmo es más sencillo de lo que parece y se usa frecuentemente en protocolos y aplicaciones de encriptado de datos, como SSL (Secure Sockets Layer), SSH (Secure Shell) o VPN (Virtual Private Network). Este algoritmo permite que dos entidades (A y B) puedan generar una clave $K_{AB}$ de forma simultánea, y sin enviarla por el canal de comunicaciones. \\
 
 1) Para ello, A y B necesitan establecer y compartir valores comunes, como un valor \textit{q} primo y una raíz primitiva $\alpha$  de \textit{q}. \\\\
 Para todo primo \(q\) existe un elemento \(a \in (\mathbb{Z}/q\mathbb{Z})^{\times}\) con \(\text{ord}(a) = q - 1 = \phi(q) =  $\#$ (\mathbb{Z}/q\mathbb{Z})^{\times}\). En otras palabras,
@@ -104,8 +104,6 @@ Por tanto:
 \begin{center}
 $K_{AB} = \alpha^{X_B X_A} \mod q = \alpha^{X_A X_B}$
 \end{center}
-
-
 
 
 \ \\
