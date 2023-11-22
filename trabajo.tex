@@ -67,13 +67,25 @@
 
 \tableofcontents
 
+\newpage
+
 \section{Introducción}
-El algoritmo Diffie-Hellman (DH) de intercambio de clave fue diseñado en 1976, permite a dos usuarios cualesquiera intercambiar, de forma confidencial, una clave secreta \textit{K} (o de sesión) para posteriormente cifrar de forma simétrica los mensajes entre ellos dos, lo que sería criptografía híbrida (uso de criptografía simétrica y asimétrica).
+El algoritmo Diffie-Hellman debe su nombre a sus creadores Whitfield Diffie y Martin Hellman. Creado en 1976, es uno de los protocolos de intercambio de claves más antiguos que todavía se siguen usando en la actualidad. Sus creadores fueron galardonados con el premio A.M. Turing 2015 por este trabajo, con el que revolucionaron por completo la seguridad informática.\\\\
+Este algoritmo permite a dos usuarios cualesquiera intercambiar, de forma confidencial, una clave secreta \textit{K} (o de sesión) para posteriormente cifrar de forma simétrica los mensajes entre ellos dos.
 
 \section{Algoritmo}
-DH permite que dos entidades (A y B) puedan generar una clave KAB de forma simultánea, y sin enviarla por el canal de comunicaciones. \\
+El funcionamiento de este algoritmo es más sencillo de lo que parece y se usa frecuentemente en protocolos y aplicaciones de encriptado de datos, como SSL (Secure Sockets Layer), SSH (Secure Shell) o VPN (Virtual Private Network). Este algoritmo permite que dos entidades (A y B) puedan generar una clave KAB de forma simultánea, y sin enviarla por el canal de comunicaciones. \\
 
-1) Para ello, A y B necesitan establecer y compartir valores comunes, como un valor \textit{q} primo y una raíz primitiva $\alpha$  de \textit{q}. 
+1) Para ello, A y B necesitan establecer y compartir valores comunes, como un valor \textit{q} primo y una raíz primitiva $\alpha$  de \textit{q}. \\\\
+Para todo primo \(q\) existe un elemento \(a \in (\mathbb{Z}/q\mathbb{Z})^{\times}\) con \(\text{ord}(a) = q - 1 = \phi(q) =  $\#$ (\mathbb{Z}/q\mathbb{Z})^{\times}\). En otras palabras,
+
+\begin{center}
+\((\mathbb{Z}/q\mathbb{Z})^{\times} = \{1, a, a^2, \ldots, a^{q-2}\}\).\\
+\end{center}
+
+Este \(a\) se llama una \textbf{raíz primitiva} módulo \(q\). Ejemplo:
+
+
 \begin{center}
 \textit{q = 3, $\alpha$ = 2; $2^1$ mod 3 = 1, $2^2$ mod 3 = 2}
 \end{center}
@@ -91,7 +103,6 @@ Ya tengo ssh
 
 
 \section{Código}
-a\\
 Definition \pythoninline{class Diffie_Hellman} means \dots 
 \pythonexternal{algoritmo.py}
 
