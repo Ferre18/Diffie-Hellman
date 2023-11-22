@@ -57,28 +57,56 @@
     
     \addtolength{\topmargin}{-3cm}
     \addtolength{\textheight}{3cm}
+    
+\renewcommand{\contentsname}{Índice}
+
 \begin{document}
 
 \maketitle
 \thispagestyle{empty}
 
-\tableofcontents 
+\tableofcontents
 
-\section{Introduction}
-a
+\section{Introducción}
+El algoritmo Diffie-Hellman (DH) de intercambio de clave fue diseñado en 1976, permite a
+dos usuarios cualesquiera intercambiar, de forma confidencial, una clave secreta \textit{K} (o de
+sesión) para posteriormente cifrar de forma simétrica los mensajes entre ellos dos, lo que
+sería criptografía híbrida (uso de criptografía simétrica y asimétrica).
 
 \section{Algoritmo}
-a\\
-\pythonexternal{algoritmo.py}
+Básicamente, DH permite que dos entidades (A y B) puedan generar una clave KAB de forma simultánea, y sin enviarla por el canal de comunicaciones. \\
+
+1) Para ello, A y B necesitan establecer y compartir valores comunes, como un valor \textit{q} primo y una raíz primitiva $\alpha$  de \textit{q}. 
+\begin{center}
+\textit{q = 3, $\alpha$ = 2; $2^1$ mod 3 = 1, $2^2$ mod 3 = 2}
+\end{center}
+
+2) Tanto A como B generan sus claves privadas ($X_{A/B}$) y públicas ($Y_{A/B}$) teniendo en cuenta que:  $ Y_{A} \equiv \alpha^{XA} \pmod{q}$, donde $0 \le X_A \le (q-1)$, $X_A$ es el logaritmo discreto de $Y_A$, y se representa $dlog_{\alpha,q}$ ($Y_A$). Por tanto, la efectividad del algoritmo depende de la dificultad de computar logaritmos discretos.
+\\
+
+3) Tanto A como B comparten sus respectivas claves públicas ($Y_A$/$Y_B$).\\
+
+4) Tanto A como B generan de forma "mágica" la clave de sesión teniendo en cuenta: KAB = ($Y_B)^{XA}$ mod q.
+
 \ \\
+
+
+
+\section{Código}
+a\\
 Definition \pythoninline{class Diffie_Hellman} means \dots 
+\pythonexternal{algoritmo.py}
 
-
-\section{Codigo}
-a
-
-\section{Conclusion}
+\section{Conclusión}
 a
 
 \end{document}
+
+
+
+
+
+
+
+
 
