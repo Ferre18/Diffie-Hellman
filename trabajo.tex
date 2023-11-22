@@ -95,8 +95,18 @@ Este \(a\) se llama una \textbf{raíz primitiva} módulo \(q\). Ejemplo:
 
 3) Tanto A como B comparten sus respectivas claves públicas ($Y_A$/$Y_B$).\\
 
-4) Tanto A como B generan de forma "mágica" la clave de sesión teniendo en cuenta: KAB = ($Y_B)^{XA}$ mod q.
-Ya tengo ssh
+4) Tanto A como B generan la clave de sesión teniendo en cuenta: 
+\begin{center}
+\(K_{AB} = (Y_B)^{X_A} \mod q \rightarrow K_{AB} = (\alpha^{X_B})^{X_A} \mod q\)  \\
+\(K_{AB} = (Y_A)^{X_B} \mod q \rightarrow K_{AB} = (\alpha^{X_A})^{X_B} \mod q\)  \\
+\end{center}
+Por tanto:
+\begin{center}
+$K_{AB} = \alpha^{X_B X_A} \mod q = \alpha^{X_A X_B}$
+\end{center}
+
+
+
 
 \ \\
 
