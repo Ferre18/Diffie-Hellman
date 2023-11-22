@@ -26,7 +26,7 @@
   	numbers=left,					% Pone el numero de lineas
 	morekeywords={self},              % Add palabras que se pintan de azul
 	keywordstyle=\ttb\color{deepblue},
-	emph={Diffie_Hellman},          % Add palabras que se pinten de rojo
+	emph={DiffieHellman, compartir_clave_publica, generar_clave_secreta, __generarClaves__, __init__, compartir_clave_secreta, cifrar_xor, descifrar_xor},          % Add palabras que se pinten de rojo
 	emphstyle=\ttb\color{deepred},    % Custom highlighting style
 	stringstyle=\color{deepgreen},
 	frame=tb,                         % Recuadro
@@ -65,6 +65,9 @@
 \maketitle
 \thispagestyle{empty}
 
+\newpage
+
+\setcounter{page}{1}
 \tableofcontents
 
 \newpage
@@ -106,13 +109,15 @@ $K_{AB} = \alpha^{X_B X_A} \mod q = \alpha^{X_A X_B}$
 \end{center}
 
 
-\ \\
-
-
-
 \section{Código}
-Definition \pythoninline{class Diffie_Hellman} means \dots 
+La clase \pythoninline{DiffieHellman}: \\
 \pythonexternal{algoritmo.py}
+\ \\
+Ejecucion del algoritmo:
+\pythonexternal{ejecucion.py}
+\ \\
+Salida de la ejecución: \\
+\lstinputlisting{salida.txt}
 
 \section{Conclusión}
 a

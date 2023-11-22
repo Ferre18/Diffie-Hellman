@@ -1,0 +1,15 @@
+----- INICIALIZAR VALORES -----
+q = 153
+alfa = 3
+
+----- GENERAR CLAVE SECRETA -----
+Clave de DH1: 231
+Clave de DH2: 231
+
+------ CIFRADO/DESCIFRADO ------
+DH1 cifrando...
+Diffie Hellman -> b'\xa3\x8e\x81\x81\x8e\x82\xc7\xaf
+\x82\x8b\x8b\x8a\x86\x89'
+DH2 descifrando...
+b'\xa3\x8e\x81\x81\x8e\x82\xc7\xaf
+\x82\x8b\x8b\x8a\x86\x89' -> Diffie Hellman
