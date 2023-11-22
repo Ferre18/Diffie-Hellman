@@ -41,7 +41,7 @@ class DiffieHellman :
         cifrado = [char ^ self.__claveSecreta__ for char in mensaje.encode()]
         return bytes(cifrado)
 
-    # Cifrar un mensaje usando XOR y la clave secreta
+    # Descifrar un mensaje usando XOR y la clave secreta
     def descifrar_xor(self, cifrado):
         mensaje = ''.join([chr(char ^ self.__claveSecreta__) for char in cifrado])
         return mensaje
