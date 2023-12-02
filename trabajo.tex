@@ -7,7 +7,8 @@
 	\usepackage{parskip}
 	\usepackage{indentfirst}
 	\usepackage{graphicx}
-	
+	\usepackage{tikz}
+	\usetikzlibrary{arrows.meta, positioning}
 	
 	\setlength{\parindent}{2em} % Ajusta el valor 2em según tus preferencias
 
@@ -85,32 +86,52 @@ El algoritmo Diffie-Hellman debe su nombre a sus creadores Whitfield Diffie y Ma
 
 Este algoritmo permite a dos usuarios cualesquiera intercambiar, de forma confidencial, una clave secreta $K$ (o de sesión) para posteriormente cifrar de forma simétrica los mensajes entre ellos dos.
 
+El funcionamiento de este algoritmo es más sencillo de lo que parece y se usa frecuentemente en protocolos y aplicaciones de encriptado de datos, como SSL (Secure Sockets Layer), SSH (Secure Shell) o VPN (Virtual Private Network). Este algoritmo permite que dos entidades (A y B) puedan generar una clave $K_{AB}$ de forma simultánea, y sin enviarla por el canal de comunicaciones.
+
 \section{Algoritmo}
-El funcionamiento de este algoritmo es más sencillo de lo que parece y se usa frecuentemente en protocolos y aplicaciones de encriptado de datos, como SSL (Secure Sockets Layer), SSH (Secure Shell) o VPN (Virtual Private Network). Este algoritmo permite que dos entidades (A y B) puedan generar una clave $K_{AB}$ de forma simultánea, y sin enviarla por el canal de comunicaciones. \\\\
-1) Para ello, A y B necesitan establecer y compartir valores comunes, como un valor \textit{q} primo y una raíz primitiva $\alpha$  de $q$. \\\\
-Para todo primo $q$ existe un elemento $\alpha \in (\mathbb{Z}/q\mathbb{Z})^{\times}$ con $\text{ord}(\alpha) = q - 1 = \phi(q) =  \# (\mathbb{Z}/q\mathbb{Z})^{\times}$. \\\\
+1) A y B necesitan establecer y compartir valores comunes, como un valor \textit{q} primo y una raíz primitiva $\alpha$  de $q$:
+
+Para todo primo $q$ existe un elemento $\alpha \in (\mathbb{Z}/q\mathbb{Z})^{\times}$ con $\text{ord}(\alpha) = q - 1 = \phi(q) =  \# (\mathbb{Z}/q\mathbb{Z})^{\times}$.
 $(\mathbb{Z}/q\mathbb{Z})^{\times}$ es el grupo multiplicativo de las clases de equivalencia módulo $q$, es decir, que no tienen ningún factor primo en común con $q$:
 \begin{center}
 $(\mathbb{Z}/q\mathbb{Z})^{\times} = \{1, \alpha, \alpha^2, \ldots, \alpha^{q-2}\}$.\\
 \end{center}
-Este $\alpha$ se llama una \textbf{raíz primitiva} módulo $q$. Ejemplo:
-\begin{center}
-\textit{q = 3, $\alpha$ = 2; $2^1$ mod 3 = 1, $2^2$ mod 3 = 1}
-\end{center}
-2) Tanto A como B generan sus claves privadas ($X_{A/B}$) y públicas ($Y_{A/B}$) teniendo en cuenta que:  $ Y_{A} \equiv \alpha^{XA} \pmod{q}$, donde $0 \le X_A \le (q-1)$, $X_A$ es el logaritmo discreto de $Y_A$, y se representa $dlog_{\alpha,q}$ ($Y_A$). Por tanto, la efectividad del algoritmo depende de la dificultad de computar logaritmos discretos.
-\\\\
+
+Este $\alpha$ se llama una \textbf{raíz primitiva} módulo $q$. Ejemplo: para $q = 5$, $\alpha = 3$ es una raíz primitiva módulo 5, ya que:
+$3^0 \mod 5 = 1$, $3^1 \mod 5 = 3$, $3^2 \mod 5 = 4$ y $3^3 \mod 5 = 2$.
+
+2) Tanto A como B generan sus claves privadas ($X_{A/B}$) y públicas ($Y_{A/B}$) teniendo en cuenta que:  $ Y_{A} \equiv \alpha^{X_A} \pmod{q}$, donde $0 \le X_A \le (q-1)$, $X_A$ es el logaritmo discreto de $Y_A$, y se representa $dlog_{\alpha,q}$ ($Y_A$). Por tanto, la efectividad del algoritmo depende de la dificultad de computar logaritmos discretos.
+
 3) Tanto A como B comparten sus respectivas claves públicas ($Y_A$/$Y_B$).
-\\\\
-4) Tanto A como B generan la clave de sesión teniendo en cuenta: 
+
+4) Tanto A como B generan la clave de sesión: 
 \begin{center}
 $K_{AB} = (Y_B)^{X_A} \mod q \rightarrow K_{AB} = (\alpha^{X_B})^{X_A} \mod q$  \\
 $K_{AB} = (Y_A)^{X_B} \mod q \rightarrow K_{AB} = (\alpha^{X_A})^{X_B} \mod q$  \\
 \end{center}
-Por tanto:
+
+A y B generan la misma clave secreta sin necesidad de compartir sus claves privadas:
+
 \begin{center}
-$K_{AB} = \alpha^{X_B X_A} \mod q = \alpha^{X_A X_B}$
+$K_{AB} = \alpha^{X_B X_A} \mod q = \alpha^{X_A X_B} \mod q$
 \end{center}
 
+El siguiente diagrama de secuencia representa la interacción entre dos entidades A y B durante el intercambio de claves:
+\begin{center}\begin{tikzpicture}
+    \draw (-2,0) -- (-2,-7) (2,0) -- (2,-7);
+    \node at (-2,.3) {A};
+    \node at (2,.3) {B};
+    \draw[->] (-2,-1) node[left,above left] {Establecer valores} -- node[midway,above] {$q$, $\alpha$} (2,-1);
+    \draw (-2,-1.5) node[left, above left] {comunes $q$ y $\alpha$};
+    \draw[->] (-2,-3) node[left,above left] {Generar una clave} -- node[midway,above] {$Y_A$} (2,-3);
+    \draw (-2,-3.5) node[left, above left] { aleatoria $X_A < q$ y calcular};
+    \draw (-2,-4) node[left, above left] { $Y_{A} \equiv \alpha^{X_A} \pmod{q}$};
+    \draw[<-] (-2,-5) -- node[midway,above] {$Y_B$} (2,-5) node[right,above right] {Generar una clave};
+    \draw (2,-5.5) node[right, above right] { aleatoria $X_B < q$ y calcular};
+    \draw (2,-6) node[right, above right] { $Y_{B} \equiv \alpha^{X_B} \pmod{q}.$};
+    \draw (2,-6.5) node[right, above right] {Calcular $K_{AB} = (Y_A)^{X_B}$};
+	\draw (-2,-5.5) node[left, above left] { Calcular $K_{AB} = (Y_B)^{X_A}$};
+\end{tikzpicture}\end{center}
 
 \section{Difusión y confusión}
 
