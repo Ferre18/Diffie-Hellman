@@ -1,0 +1,179 @@
+\documentclass[11pt]{article}
+	\usepackage{listings}
+	\usepackage{amsmath}
+	\usepackage{amssymb}
+	\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+	\usepackage[hidelinks=true]{hyperref}
+	\usepackage{parskip}
+	\usepackage{indentfirst}
+	\usepackage{graphicx}
+	
+	
+	\setlength{\parindent}{2em} % Ajusta el valor 2em según tus preferencias
+
+	
+	% BEGIN CUSTOM PYTHON
+	% Fuente para python
+	\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{11} % for bold
+	\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{11}  % for normal
+
+	% Mis colores
+	\definecolor{deepblue}{rgb}{0,0,0.5}
+	\definecolor{deepred}{rgb}{0.6,0,0}
+	\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+	% Python style for highlighting
+	\newcommand\pythonstyle{\lstset{
+	language=Python,
+	basicstyle=\ttm,
+	breakatwhitespace=false,         % Activarlo para que los saltos automáticos solo se apliquen en los espacios en blanco
+  	breaklines=true,                 % Activa el salto de línea automático
+  	tabsize=2,	                   % Establece el salto de las tabulaciones a 2 espacios
+  	numbers=left,					% Pone el numero de lineas
+	morekeywords={self},              % Add palabras que se pintan de azul
+	keywordstyle=\ttb\color{deepblue},
+	emph={DiffieHellman, compartir_clave_publica, generar_clave_secreta, __generarClaves__, __init__, compartir_clave_secreta, cifrar_xor, descifrar_xor},          % Add palabras que se pinten de rojo
+	emphstyle=\ttb\color{deepred},    % Custom highlighting style
+	stringstyle=\color{deepgreen},
+	frame=tb,                         % Recuadro
+	showstringspaces=false
+	}}
+
+
+	% Comando para escribir python directamente en el .tex
+	\lstnewenvironment{python}[1][]
+	{
+	\pythonstyle
+	\lstset{#1}
+	}
+	{}
+
+	% Comando para escribir python desde un fichero externo
+	\newcommand\pythonexternal[2][]{{
+	\pythonstyle
+	\lstinputlisting[#1]{#2}}}
+
+	% Comando para escribir codigo suelto python en una linea
+	\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+	% END CUSTOM PYTHON
+
+    \title{\textbf{\huge Intercambio de claves de Diffie y Hellman}}
+    \author{Adrián Racero Serrano\\Juan Manuel Cardeñosa Borrego}
+    \date{}
+    
+
+    
+    \addtolength{\topmargin}{-3cm}
+    \addtolength{\textheight}{3cm}
+    
+\renewcommand{\contentsname}{Índice}
+
+\begin{document}
+\maketitle
+
+\thispagestyle{empty}
+
+\newpage
+
+\setcounter{page}{1}
+\tableofcontents
+
+\newpage
+
+\section{Introducción}
+El algoritmo Diffie-Hellman debe su nombre a sus creadores Whitfield Diffie y Martin Hellman. Creado en 1976, es uno de los protocolos de intercambio de claves más antiguos que todavía se siguen usando en la actualidad. Sus creadores fueron galardonados con el premio A.M. Turing 2015 por este trabajo, con el que revolucionaron por completo la seguridad informática.
+
+Este algoritmo permite a dos usuarios cualesquiera intercambiar, de forma confidencial, una clave secreta $K$ (o de sesión) para posteriormente cifrar de forma simétrica los mensajes entre ellos dos.
+
+\section{Algoritmo}
+El funcionamiento de este algoritmo es más sencillo de lo que parece y se usa frecuentemente en protocolos y aplicaciones de encriptado de datos, como SSL (Secure Sockets Layer), SSH (Secure Shell) o VPN (Virtual Private Network). Este algoritmo permite que dos entidades (A y B) puedan generar una clave $K_{AB}$ de forma simultánea, y sin enviarla por el canal de comunicaciones. \\\\
+1) Para ello, A y B necesitan establecer y compartir valores comunes, como un valor \textit{q} primo y una raíz primitiva $\alpha$  de $q$. \\\\
+Para todo primo $q$ existe un elemento $\alpha \in (\mathbb{Z}/q\mathbb{Z})^{\times}$ con $\text{ord}(\alpha) = q - 1 = \phi(q) =  \# (\mathbb{Z}/q\mathbb{Z})^{\times}$. \\\\
+$(\mathbb{Z}/q\mathbb{Z})^{\times}$ es el grupo multiplicativo de las clases de equivalencia módulo $q$, es decir, que no tienen ningún factor primo en común con $q$:
+\begin{center}
+$(\mathbb{Z}/q\mathbb{Z})^{\times} = \{1, \alpha, \alpha^2, \ldots, \alpha^{q-2}\}$.\\
+\end{center}
+Este $\alpha$ se llama una \textbf{raíz primitiva} módulo $q$. Ejemplo:
+\begin{center}
+\textit{q = 3, $\alpha$ = 2; $2^1$ mod 3 = 1, $2^2$ mod 3 = 1}
+\end{center}
+2) Tanto A como B generan sus claves privadas ($X_{A/B}$) y públicas ($Y_{A/B}$) teniendo en cuenta que:  $ Y_{A} \equiv \alpha^{XA} \pmod{q}$, donde $0 \le X_A \le (q-1)$, $X_A$ es el logaritmo discreto de $Y_A$, y se representa $dlog_{\alpha,q}$ ($Y_A$). Por tanto, la efectividad del algoritmo depende de la dificultad de computar logaritmos discretos.
+\\\\
+3) Tanto A como B comparten sus respectivas claves públicas ($Y_A$/$Y_B$).
+\\\\
+4) Tanto A como B generan la clave de sesión teniendo en cuenta: 
+\begin{center}
+$K_{AB} = (Y_B)^{X_A} \mod q \rightarrow K_{AB} = (\alpha^{X_B})^{X_A} \mod q$  \\
+$K_{AB} = (Y_A)^{X_B} \mod q \rightarrow K_{AB} = (\alpha^{X_A})^{X_B} \mod q$  \\
+\end{center}
+Por tanto:
+\begin{center}
+$K_{AB} = \alpha^{X_B X_A} \mod q = \alpha^{X_A X_B}$
+\end{center}
+
+
+\section{Código}
+La clase \pythoninline{DiffieHellman}: \\
+\pythonexternal{code/algoritmo.py}
+\ \\
+Ejecucion del algoritmo:
+\pythonexternal{code/ejecucion.py}
+\ \\
+Salida de la ejecución: \\
+\lstinputlisting{code/salida.txt}
+
+\section{Autenticación}
+
+En el mundo real, el intercambio de claves Diffie-Hellman rara vez se utiliza por sí solo. La razón principal detrás de esto es que no proporciona autenticación, lo que deja a los usuarios vulnerables a los ataques de intermediarios.
+
+Estos ataques pueden tener lugar cuando el intercambio de claves Diffie-Hellman se implementa por sí mismo, porque no tiene forma de verificar si la otra parte en una conexión es realmente quien dice ser. Sin ninguna forma de autenticación, los usuarios pueden conectarse con atacantes cuando creen que se están comunicando con una parte de confianza.
+
+Por esta razón, el intercambio de claves Diffie-Hellman generalmente se implementa junto con algunos medios de autenticación. Esto a menudo implica el uso de certificados digitales y un algoritmo de clave pública, como RSA, para verificar la identidad de cada parte.
+
+
+\section{Seguridad}
+El intercambio de claves de Diffie-Hellman es considerado bastante seguro debido a la complejidad computacional asociada a los logaritmos discretos. Este protocolo utiliza operaciones exponenciales y módulo sobre números primos grandes para generar claves compartidas sin la necesidad de transmitir información sensible entre las partes. La esencia de su seguridad radica en la dificultad de calcular el logaritmo discreto, es decir, encontrar la clave privada a partir de la clave pública en un entorno de campo finito.
+
+La complejidad del logaritmo discreto impide eficientemente la resolución del problema mediante métodos de fuerza bruta o algoritmos conocidos. Aunque los avances en el poder de cómputo han permitido el desarrollo de métodos más sofisticados, la resistencia del Diffie-Hellman persiste debido a la imposibilidad de realizar cálculos inversos de manera eficiente en el entorno criptográfico. Sin embargo, a medida que la computación cuántica avanza, se plantean preocupaciones sobre la vulnerabilidad potencial del Diffie-Hellman a ciertos algoritmos cuánticos, lo que motiva la investigación de técnicas criptográficas postcuánticas. 
+
+Además, en la implementación práctica del Diffie-Hellman, es común utilizar medidas adicionales de seguridad, como la autenticación mediante certificados digitales y algoritmos de clave pública, para garantizar que las partes involucradas en el intercambio sean quienes dicen ser. Estas medidas adicionales abordan las limitaciones del Diffie-Hellman relacionadas con la autenticación y fortalecen aún más la seguridad del protocolo en entornos del mundo real. En resumen, la seguridad del intercambio de claves de Diffie-Hellman se basa en la complejidad del logaritmo discreto y se complementa con prácticas de implementación que abordan sus limitaciones en términos de autenticación.
+
+\section{Variaciones del intercambio de claves Diffie-Hellman}
+
+El intercambio de claves Diffie-Hellman se puede implementar de varias formas diferentes, y también ha proporcionado la base para varios otros algoritmos. Algunas de estas implementaciones proporcionan autorización, mientras que otras tienen varias características criptográficas, como el perfecto secreto hacia adelante.
+
+\subsection{Curva elíptica Diffie-Hellman}
+Curva elíptica Diffie-Hellman aprovecha la estructura algebraica de las curvas elípticas para permitir que sus implementaciones logren un nivel similar de seguridad con un tamaño de clave más pequeño. Una clave de curva elíptica de 224 bits proporciona el mismo nivel de seguridad que una clave RSA de 2048 bits. Esto puede hacer que los intercambios sean más eficientes y reducir los requisitos de almacenamiento.
+
+Aparte de la longitud de clave más pequeña y el hecho de que se basa en las propiedades de las curvas elípticas, Diffie-Hellman de curva elíptica opera de manera similar al intercambio de claves Diffie-Hellman estándar.
+
+\subsection{TLS}
+
+TLS, que es un protocolo que se utiliza para proteger gran parte de Internet, puede utilizar el intercambio Diffie-Hellman de tres formas diferentes: anónima, estática y efímera. En la práctica, solo se debe implementar Diffie-Hellman efímero, porque las otras opciones tienen problemas de seguridad.
+
+
+\begin{itemize}
+    \item \textbf{Diffie-Hellman anónimo:} esta versión del intercambio de claves Diffie-Hellman no utiliza ninguna autenticación, lo que la deja vulnerable a los ataques de intermediarios. No debe usarse ni implementarse.
+    \item \textbf{Static Diffie-Hellman:} Diffie-Hellman estático utiliza certificados para autenticar el servidor. No autentica al cliente de forma predeterminada, ni proporciona secreto hacia adelante.
+    \item \textbf{Diffie-Hellman efímero:} se considera la implementación más segura porque proporciona un secreto directo perfecto. Generalmente se combina con un algoritmo como DSA o RSA para autenticar a una o ambas partes en la conexión. Efímero Diffie-Hellman utiliza diferentes pares de claves cada vez que se ejecuta el protocolo. Esto le da a la conexión un perfecto secreto hacia adelante, porque incluso si una clave se ve comprometida en el futuro, no se puede usar para descifrar todos los mensajes pasados.\\
+\end{itemize}
+
+\section{Conclusión}
+En conclusión, el intercambio de claves de Diffie-Hellman ha demostrado ser una piedra angular en la construcción de comunicaciones seguras en entornos digitales. A lo largo de décadas, este protocolo ha ofrecido una solución eficaz para el desafío fundamental de establecer claves compartidas en un canal inseguro.
+
+La gran característica del intercambio de claves de Diffie-Hellman radica en su capacidad para garantizar la confidencialidad de las claves compartidas, incluso en un escenario donde un atacante puede interceptar la comunicación. Su enfoque basado en la complejidad computacional de los logaritmos discretos ha resistido la prueba del tiempo, proporcionando una base sólida para numerosos protocolos de seguridad.
+
+Sin embargo, es crucial reconocer las limitaciones inherentes del Diffie-Hellman, especialmente en lo que respecta a la autenticación. En el mundo real, su implementación a menudo se combina con certificados digitales y algoritmos de clave pública para abordar la falta de verificación de la identidad de las partes involucradas. Esta adaptación ha permitido que el Diffie-Hellman se integre con éxito en protocolos como TLS/SSL, proporcionando una seguridad más completa y autenticada.
+
+A medida que la ciberseguridad evoluciona, el intercambio de claves de Diffie-Hellman enfrentará desafíos continuos, desde la amenaza potencial de la computación cuántica hasta la necesidad constante de mejorar los protocolos de autenticación. Sin embargo, su impacto duradero en la seguridad de la información subraya su importancia como un pilar confiable en la construcción de sistemas de comunicación seguros y confiables. En un panorama digital en constante cambio, el Diffie-Hellman sigue siendo un contribuyente fundamental a la garantía de la privacidad y la integridad de las comunicaciones en línea.
+
+\end{document}
+
+
+
+
+
+
+
+
+
