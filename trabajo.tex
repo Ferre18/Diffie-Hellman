@@ -159,17 +159,17 @@ La seguridad del intercambio de claves Diffie-Hellman depende de cómo se implem
 
 \subsection {El ataque de Logjam}
 
-El intercambio de claves Diffie-Hellman se diseñó sobre la base de que el problema del logaritmo discreto era difícil de resolver. El mecanismo conocido públicamente más eficaz para encontrar la solución es el algoritmo de tamiz de campo numérico (método utilizado para encontrar números primos en un rango específico).
+El intercambio de claves Diffie-Hellman se basó en la idea de que resolver el problema del logaritmo discreto sería una tarea complicada. Se tomó en consideración la eficacia del algoritmo de tamiz de campo numérico (algoritmo que se utiliza para identificar números primos en un rango específico).
 
-Las capacidades de este algoritmo se tuvieron en cuenta cuando se diseñó el intercambio de claves Diffie-Hellman. En 1992, se sabía que para un grupo dado, G, tres de los cuatro pasos involucrados en el algoritmo podrían potencialmente calcularse de antemano. Si se guardara este progreso, el paso final podría calcularse en un tiempo comparativamente corto. Esto no fue demasiado preocupante hasta que se descubrió que una parte significativa del tráfico de Internet utiliza los mismos grupos que son de 1024 bits o menos. En 2015, un equipo académico ejecutó los cálculos para el primo de 512 bits más común utilizado por el intercambio de claves Diffie-Hellman en TLS.
+En 1992, ya se sabía que, para un grupo dado G, tres de los cuatro pasos del algoritmo podrían calcularse de antemano. Al almacenar este progreso, el paso final podría calcularse en un tiempo corto. Este aspecto no causó mucha preocupación hasta que se descubrió que una parte considerable del tráfico de Internet utilizaba grupos de 1024 bits o menos. En 2015, un equipo académico realizó cálculos específicamente para el primo de 512 bits más comúnmente empleado en el intercambio de claves Diffie-Hellman en TLS.
 
-También pudieron degradar el 80$\%$ de los servidores TLS que admitían DHE-EXPORT, de modo que aceptaran un intercambio de claves Diffie-Hellman de grado de exportación de 512 bits para la conexión. Esto significa que cada uno de estos servidores es vulnerable a un ataque de un adversario con recursos suficientes.
+Además, lograron debilitar el 80$\%$ de los servidores TLS que admitían DHE-EXPORT, por lo que estos servidores aceptarían un intercambio de claves Diffie-Hellman de grado de exportación de 512 bits para la conexión. En consecuencia, cada uno de estos servidores se vuelve vulnerable a un ataque por parte de un adversario con recursos suficientes.
 
-Los investigadores continuaron extrapolando sus resultados, estimando que un estado-nación podría romper un primo de 1024 bits. Al romper el número primo de 1024 bits más utilizado, el equipo académico estimó que un adversario podría monitorizar el 18$\%$ del millón de sitios web HTTPS más populares.
+Los investigadores llevaron sus resultados un paso más allá, estimando que un estado-nación podría comprometer un número primo de 1024 bits. Al romper el número primo de 1024 bits más usado, el equipo académico calculó que un adversario podría monitorizar el 18$\%$ de los sitios web HTTPS más populares, que ascienden a un millón.
 
-Continuaron diciendo que un segundo principal permitiría al adversario descifrar las conexiones del 66$\%$ de los servidores VPN y del 26$\%$ de los servidores SSH. Más adelante en el informe, los académicos sugirieron que es posible que la NSA ya tenga estas capacidades.
+Además, indicaron que permitiría al adversario descifrar las conexiones del 66$\%$ de los servidores VPN y del 26$\%$ de los servidores SSH. En una nota posterior del informe, los académicos plantearon la posibilidad de que la NSA ya tenga estas capacidades.
 
-A pesar de esta vulnerabilidad, el intercambio de claves Diffie-Hellman aún puede ser seguro si se implementa correctamente. Mientras se use una clave de 2048 bits, el ataque Logjam no funcionará. Los navegadores actualizados también están a salvo de este ataque.
+A pesar de esta vulnerabilidad, el intercambio de claves Diffie-Hellman puede seguir siendo seguro si se implementa correctamente. Utilizando una clave de 2048 bits, el ataque Logjam no es efectivo. Además, los navegadores están protegidos contra este tipo de ataque.
 
 \section{Variaciones del intercambio de claves Diffie-Hellman}
 
