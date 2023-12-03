@@ -82,11 +82,11 @@
 \newpage
 
 \section{Introducción}
-El algoritmo Diffie-Hellman debe su nombre a sus creadores Whitfield Diffie y Martin Hellman. Creado en 1976, es uno de los protocolos de intercambio de claves más antiguos que todavía se siguen usando en la actualidad. Sus creadores fueron galardonados con el premio A.M. Turing 2015 por este trabajo, con el que revolucionaron por completo la seguridad informática.
+En 1976, Whitfield Diffie y Martin Hellman crearon el algoritmo Diffie-Hellman, un protocolo de intercambio de claves que sigue siendo utilizado hoy en día. Su innovador trabajo en seguridad informática les valió el Premio A.M. Turing en 2015.
 
-Este algoritmo permite a dos usuarios cualesquiera intercambiar, de forma confidencial, una clave secreta $K$ (o de sesión) para posteriormente cifrar de forma simétrica los mensajes entre ellos dos.
+Este algoritmo posibilita que dos usuarios intercambien de manera confidencial una clave secreta, denominada $K$ o de sesión, que luego utilizan para cifrar sus mensajes de manera simétrica.
 
-El funcionamiento de este algoritmo es más sencillo de lo que parece y se usa frecuentemente en protocolos y aplicaciones de encriptado de datos, como SSL (Secure Sockets Layer), SSH (Secure Shell) o VPN (Virtual Private Network). Este algoritmo permite que dos entidades (A y B) puedan generar una clave $K_{AB}$ de forma simultánea, y sin enviarla por el canal de comunicaciones.
+A pesar de su aparente complejidad, el algoritmo Diffie-Hellman es bastante sencillo y se implementa con frecuencia en protocolos y aplicaciones de cifrado, como SSL, SSH o VPN. Su función principal es permitir que dos entidades (A y B) generen simultáneamente una clave compartida $K_{AB}$ sin necesidad de enviarla a través del canal de comunicación.
 
 \section{Algoritmo}
 1) A y B necesitan establecer y compartir valores comunes, como un valor \textit{q} primo y una raíz primitiva $\alpha$  de $q$:
@@ -147,15 +147,13 @@ Estos conceptos se aplican una vez obtenida la clave secreta en el algoritmo, pa
 
 \section{Autenticación}
 
-En el mundo real, el intercambio de claves Diffie-Hellman rara vez se utiliza por sí solo. La razón principal detrás de esto es que no proporciona autenticación, lo que deja a los usuarios vulnerables a los ataques de intermediarios.
+Hoy en día, el método de intercambio de claves Diffie-Hellman raramente se emplea por sí solo, ya que carece de autenticación, lo que deja a los usuarios expuestos a posibles ataques de intermediarios. Al no contar con algún mecanismo de autenticación, los usuarios podrían establecer conexión con atacantes sin darse cuenta, creyendo que están comunicándose con una entidad de confianza.
 
-Estos ataques pueden tener lugar cuando el intercambio de claves Diffie-Hellman se implementa por sí mismo, porque no tiene forma de verificar si la otra parte en una conexión es realmente quien dice ser. Sin ninguna forma de autenticación, los usuarios pueden conectarse con atacantes cuando creen que se están comunicando con una parte de confianza.
-
-Por esta razón, el intercambio de claves Diffie-Hellman generalmente se implementa junto con algunos medios de autenticación. Esto a menudo implica el uso de certificados digitales y un algoritmo de clave pública, como RSA, para verificar la identidad de cada parte.
+Por esta razón, el intercambio de claves Diffie-Hellman generalmente se implementa en conjunto con métodos de autenticación adicionales. Esto suele implicar el uso de certificados digitales y un algoritmo de clave pública, como RSA, para verificar la identidad de cada una de las partes involucradas.
 
 
 \section{Problemas de seguridad del intercambio de claves Diffie-Hellman}
-La seguridad del intercambio de claves Diffie-Hellman depende de cómo se implemente, así como de los números que se elijan para ello. Como dijimos anteriormente, no tiene medios para autenticar a la otra parte por sí misma, pero en la práctica se utilizan otros mecanismos para garantizar que la otra parte en una conexión no sea un impostor.
+La eficacia del intercambio de claves Diffie-Hellman en términos de seguridad está definida por la forma en que se implementa y por la elección de los números involucrados. Por sí mismo, el método carece de la capacidad de autenticar a la otra parte en la comunicación. Sin embargo, en la práctica, se suelen emplear otros mecanismos para asegurar que la entidad en la otra extremidad de la conexión sea auténtica y no un impostor.
 
 \subsection {El ataque de Logjam}
 
