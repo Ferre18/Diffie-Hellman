@@ -173,22 +173,22 @@ A pesar de esta vulnerabilidad, el intercambio de claves Diffie-Hellman aún pue
 
 \section{Variaciones del intercambio de claves Diffie-Hellman}
 
-El intercambio de claves Diffie-Hellman se puede implementar de varias formas diferentes, y también ha proporcionado la base para varios otros algoritmos. Algunas de estas implementaciones proporcionan autorización, confidencialidad, técnicas criptográficas varias, como el \emph{Perfect forward secrecy}, ...
+El intercambio de claves Diffie-Hellman se puede implementar de distintas maneras y también proporciona la base para varios otros algoritmos. Algunas de estas implementaciones proporcionan autorización, confidencialidad, técnicas criptográficas varias, como el \emph{Perfect forward secrecy}, ...
 
 \subsection{Curva elíptica Diffie-Hellman}
-Curva elíptica Diffie-Hellman aprovecha la estructura algebraica de las curvas elípticas para permitir que sus implementaciones logren un nivel similar de seguridad con un tamaño de clave más pequeño. Una clave de curva elíptica de 224 bits proporciona el mismo nivel de seguridad que una clave RSA de 2048 bits. Esto puede hacer que los intercambios sean más eficientes y reducir los requisitos de almacenamiento.
+Curva elíptica Diffie-Hellman aprovecha la estructura algebraica de las curvas elípticas, lo que permite que su implementación alcance niveles similares de seguridad con tamaños de clave más pequeños. Las claves de curva elíptica de 224 bits proporcionan el mismo nivel de seguridad que las claves RSA de 2048 bits. Esto mejora la eficiencia de conmutación y reduce los requisitos de almacenamiento.
 
-Aparte de la longitud de clave más pequeña y el hecho de que se basa en las propiedades de las curvas elípticas, Diffie-Hellman de curva elíptica opera de manera similar al intercambio de claves Diffie-Hellman estándar.
+Diffie-Hellman de curva elíptica funciona de manera similar al intercambio de claves estándar Diffie-Hellman, excepto por la longitud de clave más pequeña y su naturaleza basada en curva elíptica.
 
 \subsection{TLS}
 
-TLS, que es un protocolo que se utiliza para proteger gran parte de Internet, puede utilizar el intercambio Diffie-Hellman de tres formas diferentes: anónima, estática y efímera. En la práctica, solo se debe implementar Diffie-Hellman efímero, porque las otras opciones tienen problemas de seguridad.
+TLS, un protocolo utilizado para proteger gran parte de Internet, puede utilizar los intercambios Diffie-Hellman de tres formas diferentes: anónima, estática y efímera. En la práctica, sólo debería implementarse la ley Diffie-Hellman efímera, ya que otras opciones tienen problemas de seguridad.
 
 
 \begin{itemize}
-    \item \textbf{Diffie-Hellman anónimo:} esta versión del intercambio de claves Diffie-Hellman no utiliza ninguna autenticación, lo que la deja vulnerable a los ataques de intermediarios. No debe usarse ni implementarse.
-    \item \textbf{Static Diffie-Hellman:} Diffie-Hellman estático utiliza certificados para autenticar el servidor. No autentica al cliente de forma predeterminada, ni proporciona secreto hacia adelante.
-    \item \textbf{Diffie-Hellman efímero:} se considera la implementación más segura porque proporciona un secreto directo perfecto. Generalmente se combina con un algoritmo como DSA o RSA para autenticar a una o ambas partes en la conexión. Efímero Diffie-Hellman utiliza diferentes pares de claves cada vez que se ejecuta el protocolo. Esto le da a la conexión un \emph{Perfect forward secrecy}, porque incluso si una clave se ve comprometida en el futuro, no se puede usar para descifrar todos los mensajes pasados.\\
+    \item \textbf{Diffie-Hellman anónimo:} no utiliza ninguna autenticación y la deja vulnerable a los ataques \emph{man-in-the-middle}. No debe usarse ni implementarse.
+    \item \textbf{Static Diffie-Hellman:} utiliza certificados para autenticar el servidor. No autentica al cliente de forma predeterminada, ni proporciona \emph{Perfect forward secrecy}.
+    \item \textbf{Diffie-Hellman efímero:} se considera la implementación más segura porque proporciona un secreto directo perfecto. Se  suele combinar con un algoritmo como DSA o RSA para autenticar a una o ambas partes en la conexión. Esta versión utiliza diferentes pares de claves cada vez que se ejecuta el protocolo. Esto le da a la conexión un \emph{Perfect forward secrecy}, porque incluso si una clave se ve comprometida en el futuro, no se puede usar para descifrar todos los mensajes pasados.\\
 \end{itemize}
 
 
@@ -205,13 +205,13 @@ En lugar de RSA, el intercambio de claves Diffie-Hellman puede combinarse con al
 
 \section{Computación cuántica en el intercambio de claves Diffie-Hellman}
 
-La computación cuántica, una disciplina en constante evolución, plantea desafíos significativos en el ámbito de la criptografía. Aunque los detalles exactos de su funcionamiento son complejos, se espera que las computadoras cuánticas puedan resolver problemas actualmente inabordables para las computadoras clásicas, lo que presenta nuevas oportunidades y riesgos.
+La computación cuántica, una disciplina en constante evolución, plantea desafíos significativos en el ámbito de la criptografía. Los detalles exactos de su funcionamiento son complejos, pero se espera que los ordenadores cuánticos tengan la capacidad de resolver problemas que actualmente son demasiado difíciles para las ordenadores clásicos, lo que abre nuevas posibilidades y riesgos.
 
-La potencial amenaza radica en algoritmos cuánticos, como el algoritmo de Grover, que podrían acelerar los ataques contra cifrados de clave simétrica, aunque este riesgo puede mitigarse duplicando el tamaño de la clave. Sin embargo, la principal inquietud recae en el algoritmo de Shor, que impactaría directamente la criptografía de clave pública.
+La amenaza principal se encuentra en los algoritmos cuánticos, como el algoritmo de Grover, que podrían acelerar los ataques contra sistemas de cifrado que utilizan claves simétricas. Aunque este riesgo puede mitigarse duplicando el tamaño de la clave, la preocupación se centra en el algoritmo de Shor, que afectaría directamente a la criptografía de clave pública.
 
-Los algoritmos de clave pública comunes, como Diffie-Hellman, se basan en la complejidad de problemas como el logaritmo discreto y la factorización de enteros. Con el avance de las computadoras cuánticas, se espera que el algoritmo de Shor facilite la resolución de estos problemas, comprometiendo la seguridad de los sistemas criptográficos que dependen de ellos.
+Los algoritmos de clave pública comunes, como Diffie-Hellman, se basan en la complejidad de problemas como el logaritmo discreto y la factorización de enteros. Con el avance de las computadoras cuánticas, se espera que el algoritmo de Shor simplifique la resolución de estos problemas, poniendo en peligro la seguridad de los sistemas criptográficos que dependen de ellos.
 
-El intercambio de claves Diffie-Hellman, en particular, se sustenta en la dificultad práctica de resolver el problema del logaritmo discreto con la tecnología actual. Aunque no hay una línea de tiempo precisa sobre cuándo la computación cuántica representará una amenaza seria para este protocolo, se están desarrollando sustitutos y alternativas en la criptografía para anticipar y contrarrestar estos posibles riesgos. La seguridad de la criptografía de clave pública, esencial para proteger las comunicaciones, se encuentra en el centro de estos desafíos que los criptógrafos están abordando activamente.
+En particular, el intercambio de claves Diffie-Hellman se sustenta en la dificultad práctica de resolver el problema del logaritmo discreto con la tecnología actual. Aunque no hay una línea de tiempo precisa sobre cuándo la computación cuántica representará una amenaza seria para este protocolo, se están desarrollando sustitutos y alternativas en la criptografía para anticipar y contrarrestar estos posibles riesgos. La seguridad de la criptografía de clave pública, fundamental para proteger las comunicaciones, es el foco principal de estos desafíos que los criptógrafos están abordando activamente.
 
 \section{Conclusión}
 En conclusión, el intercambio de claves de Diffie-Hellman ha demostrado ser una piedra angular en la construcción de comunicaciones seguras en entornos digitales. A lo largo de décadas, este protocolo ha ofrecido una solución eficaz para el desafío fundamental de establecer claves compartidas en un canal inseguro.
