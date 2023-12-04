@@ -88,6 +88,8 @@ Este algoritmo posibilita que dos usuarios intercambien de manera confidencial u
 
 A pesar de su aparente complejidad, el algoritmo Diffie-Hellman es bastante sencillo y se implementa con frecuencia en protocolos y aplicaciones de cifrado, como SSL, SSH o VPN. Su función principal es permitir que dos entidades (A y B) generen simultáneamente una clave compartida $K_{AB}$ sin necesidad de enviarla a través del canal de comunicación.
 
+No obstante, hay que tener el cuenta que el uso único de Diffie-Hellman puede llevar consigo varias vulnerabilidades, como puede ser la falta de autenticación o la apación de los ordenadores cuánticos que podrían poner en peligro este algoritmo.
+
 \section{Algoritmo}
 1) A y B necesitan establecer y compartir valores comunes, como un valor \textit{q} primo y una raíz primitiva $\alpha$  de $q$:
 
