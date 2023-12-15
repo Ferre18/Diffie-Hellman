@@ -99,9 +99,9 @@
 
 En 1976, Whitfield Diffie y Martin Hellman crearon el algoritmo Diffie-Hellman, un protocolo de intercambio de claves que sigue siendo utilizado hoy en día. Su innovador trabajo en seguridad informática les llevó a ganar el Premio A.M. Turing en 2015.
 
-Este algoritmo permite que dos usuarios puedan intercambiar de manera confidencial una clave secreta, denominada $K$ o de sesión, que luego utilizan para cifrar sus mensajes de manera simétrica.
+Este algoritmo permite que dos entidades (A y B) puedan intercambiar de manera confidencial una clave secreta, denominada $K_{AB}$ o de sesión, que luego utilizan para cifrar sus mensajes de manera simétrica. Esta clave se genera simultáneamente y sin necesidad de enviarla a través del canal de comunicación. 
 
-A pesar de su aparente complejidad, el algoritmo Diffie-Hellman es bastante sencillo y se implementa con frecuencia en protocolos y aplicaciones de cifrado, como SSL, SSH o VPN. Su función principal es permitir que dos entidades (A y B) generen simultáneamente una clave compartida $K_{AB}$ sin necesidad de enviarla a través del canal de comunicación.
+A pesar de su aparente complejidad, el algoritmo Diffie-Hellman es bastante sencillo y se implementa con frecuencia en protocolos y aplicaciones de cifrado, como SSL, SSH o VPN.
 
 No obstante, hay que tener el cuenta que el uso único de Diffie-Hellman puede llevar consigo varias vulnerabilidades, como puede ser la falta de autenticación o la apación de los ordenadores cuánticos que podrían poner en peligro este algoritmo.
 
@@ -118,7 +118,7 @@ $(\mathbb{Z}/q\mathbb{Z})^{\times}$ es el grupo multiplicativo de las clases de 
 $(\mathbb{Z}/q\mathbb{Z})^{\times} = \{1, \alpha, \alpha^2, \ldots, \alpha^{q-2}\}$.\\
 \end{center}
 
-Este $\alpha$ se llama una \textbf{raíz primitiva} módulo $q$. Ejemplo: para $q = 5$, $\alpha = 3$ es una raíz primitiva módulo 5, ya que:
+Este $\alpha$ se llama una raíz primitiva módulo $q$. Ejemplo: para $q = 5$, $\alpha = 3$ es una raíz primitiva módulo 5, ya que:
 $3^0 \mod 5 = 1$, $3^1 \mod 5 = 3$, $3^2 \mod 5 = 4$ y $3^3 \mod 5 = 2$.
 
 \newpage
@@ -156,7 +156,7 @@ El siguiente diagrama de secuencia representa la interacción entre dos entidade
 	\draw (-2,-5.5) node[left, above left] { Calcular $K_{AB} = (Y_B)^{X_A}$};
 \end{tikzpicture}\end{center}
 
-La efectividad del algoritmo depende de la dificultad de computar logaritmos discretos (mucho más complicado que calcular la exponenciación usada para transformar los números) y que es computacionalmente imposible deducir la clave privada del usuario U a partir de su clave pública. Por consecuencia, la clave secreta es el resultado de aplicar una función unidireccional al número secreto.
+La efectividad del algoritmo depende de la dificultad de computar lo-garitmos discretos (mucho más complicado que calcular la exponenciación usada para transformar los números) y que es computacionalmente imposible deducir la clave privada de un usuario a partir de su clave pública. Por consecuencia, la clave secreta es el resultado de aplicar una función unidireccional al número secreto.
 
 \newpage
 
@@ -193,7 +193,8 @@ Hoy en día, el método de intercambio de claves Diffie-Hellman raramente se emp
 
 \newpage
 
-En el siguiente diagrama observamos que una tercera persona (Mallory) está pichando el canal de comunicaciones haciéndose pasar por B, ya que no existe un mecanismo de autenticación mediante el cual A pueda comprobar con la persona que quiere comunicarse.
+En el siguiente diagrama observamos que una tercera persona (Mallory) está pichando el canal de comunicaciones haciéndose pasar por B, ya que no existe un mecanismo de autenticación mediante el cual A pueda comprobar la identidad de la persona con la que quiere comunicarse.
+
 \begin{center}\begin{tikzpicture}
     \draw (-2,0) -- (-2,-5) (2,0) -- (2,-5) (6,0) -- (6,-5);
     \node at (-2,.3) {A};
@@ -237,7 +238,7 @@ A pesar de esta vulnerabilidad, el intercambio de claves Diffie-Hellman puede se
 
 \section{Variaciones del intercambio de claves Diffie-Hellman}
 
-El intercambio de claves Diffie-Hellman se puede implementar de múltiples formas, proporcionando tambíen, la base para otros algoritmos. Algunas de estas implementaciones proporcionan autorización, confidencialidad, técnicas criptográficas varias, como el \emph{Perfect forward secrecy}, ...
+El intercambio de claves Diffie-Hellman se puede implementar de múl-tiples formas, proporcionando tambíen, la base para otros algoritmos. Algunas de estas implementaciones proporcionan autorización, confidencialidad, técnicas criptográficas varias, como el \emph{Perfect forward secrecy}, ...
 
 \newpage
 
@@ -287,7 +288,7 @@ En lugar de RSA, el intercambio de claves Diffie-Hellman puede combinarse con al
 
 \section{Computación cuántica en el intercambio de claves Diffie-Hellman}
 
-La computación cuántica es una disciplina en constante evolución y que plantea desafíos significativos en el ámbito de la criptografía. Los detalles exactos de su funcionamiento son complejos, pero se espera que los ordenadores cuánticos tengan la capacidad de resolver problemas que actualmente son demasiado difíciles para las ordenadores convencionales, lo que abre nuevas posibilidades y riesgos.
+La computación cuántica es una disciplina en constante evolución y que plantea desafíos significativos en el ámbito de la criptografía. Los detalles exactos de su funcionamiento son complejos, pero se espera que los ordenadores cuánticos tengan la capacidad de resolver problemas que actualmente son demasiado difíciles para los ordenadores convencionales, lo que abre nuevas posibilidades y riesgos.
 
 La amenaza principal se encuentra en los algoritmos cuánticos, como el algoritmo de Grover, que podrían acelerar los ataques contra sistemas de cifrado que utilizan claves simétricas. Aunque este riesgo puede mitigarse duplicando el tamaño de la clave, la preocupación se centra en el algoritmo de Shor, que afectaría directamente a la criptografía de clave pública.
 
@@ -318,17 +319,24 @@ A medida que la ciberseguridad evoluciona, el intercambio de claves de Diffie-He
 
 \section{Bibliografía}
 
-\emph{https://cadadr.org/teoria-de-numeros-basica/hoja-6.pdf}
+\textcolor{blue}{\emph{\href{https://cadadr.org/teoria-de-numeros-basica/hoja-6.pdf}{https://cadadr.org/teoria-de-numeros-basica/hoja-6.pdf}}}
 
-\emph{https://ciberseguridad.com/guias/recursos/intercambio-claves-diffie-hellman/}
+\textcolor{blue}{\emph{\href{https://ciberseguridad.com/guias/recursos/intercambio-claves-diffie-hellman/}{https://ciberseguridad.com/guias/recursos/intercambio-claves-diffie-hellman/}}}
 
-\emph{https://www.computerweekly.com/es/definicion/Intercambio-de-claves-Diffie-Hellman-intercambio-de-claves-exponencial}
+\textcolor{blue}{\emph{\href{https://www.computerweekly.com/es/definicion/Intercambio-de-claves-Diffie-Hellman-intercambio-de-claves-exponencial}{https://www.computerweekly.com/es/definicion/Intercambio-de-claves-Diffie-Hellman-intercambio-de-claves-exponencial}}}
 
+\textcolor{blue}{\emph{\href{https://keepcoding.io/blog/que-es-el-algoritmo-diffie-hellman/}{https://keepcoding.io/blog/que-es-el-algoritmo-diffie-hellman/}}}
+
+\textcolor{blue}{\emph{\href{https://www.comunidad.escom.ipn.mx/ibuitron/docs/tt/2020-B005/2020B005-protocolo-1.0.pdf}{https://www.comunidad.escom.ipn.mx/ibuitron/docs/tt/2020-B005/2020B005-protocolo-1.0.pdf}}}
+
+\textcolor{blue}{\emph{\href{https://juncotic.com/rsa-como-funciona-este-algoritmo/}{https://juncotic.com/rsa-como-funciona-este-algoritmo/}}}
+
+\textcolor{blue}{\emph{\href{https://security.stackexchange.com/questions/73114/authenticated-diffie-hellman-key-exchange}{https://security.stackexchange.com/questions/73114/authenticated-diffie-hellman-key-exchange}}}
 
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% BIBLIOGRAFIA
+% ANEXO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Anexo}
