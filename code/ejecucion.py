@@ -1,7 +1,7 @@
 from algoritmo import *
 
 print("----- INICIALIZAR VALORES -----")
-print("q = 153")
+print("q = 353")
 print("alfa = 3")
 print()
 DH1 = DiffieHellman(353,3)
